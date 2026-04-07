@@ -54,33 +54,37 @@ export const Modal = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-4 sm:items-center sm:py-6"
+      className="fixed inset-0 z-50 bg-black/70"
       role="dialog"
       aria-modal="true"
       aria-label={title}
     >
-      <div
-        className={cn(
-          "my-auto flex w-full flex-col overflow-hidden rounded-[2rem] border border-primary/10 bg-surface shadow-soft",
-          "max-h-[calc(100dvh-2rem)] sm:max-h-[90vh]",
-          sizeClasses[size]
-        )}
-      >
-        <div className="flex items-start justify-between gap-4 border-b border-primary/10 px-5 py-4">
-          <div>
-            <h2 className="text-xl font-bold text-dark">{title}</h2>
-            {description ? <p className="mt-1 text-sm text-text/70">{description}</p> : null}
+      <div className="fixed inset-0 flex items-end justify-center p-3 sm:items-center sm:p-6">
+        <div
+          className={cn(
+            "flex w-full flex-col overflow-hidden rounded-[2rem] border border-primary/10 bg-surface shadow-soft",
+            "h-[calc(100dvh-1.5rem)] max-h-[calc(100dvh-1.5rem)] sm:h-auto sm:max-h-[90vh]",
+            sizeClasses[size]
+          )}
+        >
+          <div className="shrink-0 flex items-start justify-between gap-4 border-b border-primary/10 px-5 py-4">
+            <div>
+              <h2 className="text-xl font-bold text-dark">{title}</h2>
+              {description ? <p className="mt-1 text-sm text-text/70">{description}</p> : null}
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/15 text-lg font-semibold text-dark transition-colors hover:bg-primary/10"
+              aria-label="Fechar modal"
+            >
+              X
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/15 text-lg font-semibold text-dark transition-colors hover:bg-primary/10"
-            aria-label="Fechar modal"
-          >
-            X
-          </button>
+          <div className="min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain px-5 py-5 [touch-action:pan-y]">
+            {children}
+          </div>
         </div>
-        <div className="overflow-y-auto overscroll-contain px-5 py-5">{children}</div>
       </div>
     </div>
   );

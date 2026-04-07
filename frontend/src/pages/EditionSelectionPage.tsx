@@ -104,73 +104,79 @@ export const EditionSelectionPage = () => {
     <div className="px-4 py-6 sm:px-6 xl:px-8 2xl:px-10">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
         <section className="rounded-[2rem] border border-primary/10 bg-surface p-6 shadow-soft sm:p-8">
-          <div className="flex items-start justify-between gap-4 lg:block">
-            <div className="min-w-0">
-              <h1 className="mt-3 text-4xl font-semibold leading-tight text-dark sm:text-5xl">
+          <div className="space-y-5">
+            <div className="flex items-start justify-between gap-4 sm:hidden">
+              <h1 className="min-w-0 text-3xl font-semibold leading-tight text-dark">
                 Escolha a edicao e depois a etapa.
               </h1>
-            </div>
+              <div ref={mobileMenuRef} className="relative shrink-0">
+                <button
+                  aria-expanded={isMobileMenuOpen}
+                  aria-haspopup="menu"
+                  className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/12 bg-light text-dark shadow-soft transition-colors hover:bg-primary/10 hover:text-black"
+                  onClick={() => setIsMobileMenuOpen((current) => !current)}
+                  type="button"
+                >
+                  <span className="flex w-5 flex-col gap-1.5">
+                    <span className="h-0.5 w-full rounded-full bg-current" />
+                    <span className="h-0.5 w-full rounded-full bg-current" />
+                    <span className="h-0.5 w-full rounded-full bg-current" />
+                  </span>
+                </button>
 
-            <div ref={mobileMenuRef} className="relative shrink-0 sm:hidden">
-              <button
-                aria-expanded={isMobileMenuOpen}
-                aria-haspopup="menu"
-                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/12 bg-light text-dark shadow-soft transition-colors hover:bg-primary/10 hover:text-black"
-                onClick={() => setIsMobileMenuOpen((current) => !current)}
-                type="button"
-              >
-                <span className="flex w-5 flex-col gap-1.5">
-                  <span className="h-0.5 w-full rounded-full bg-current" />
-                  <span className="h-0.5 w-full rounded-full bg-current" />
-                  <span className="h-0.5 w-full rounded-full bg-current" />
-                </span>
-              </button>
+                {isMobileMenuOpen ? (
+                  <div className="absolute right-0 top-[calc(100%+0.75rem)] z-30 w-[17rem] rounded-[1.5rem] border border-primary/10 bg-white p-3 shadow-[0_20px_60px_rgba(24,48,34,0.14)]">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="rounded-[1.2rem] border border-primary/10 bg-primary/10 px-4 py-3">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary/70">
+                          Edicao atual
+                        </p>
+                        <p className="mt-2 text-xl font-semibold text-dark">
+                          {selectedYear ? selectedYear.ano : "--"}
+                        </p>
+                      </div>
+                      <div className="rounded-[1.2rem] border border-primary/10 bg-primary/10 px-4 py-3">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary/70">
+                          Etapa atual
+                        </p>
+                        <p className="mt-2 text-xl font-semibold text-dark">{selectedStageLabel}</p>
+                      </div>
+                    </div>
 
-              {isMobileMenuOpen ? (
-                <div className="absolute right-0 top-[calc(100%+0.75rem)] z-30 w-[17rem] rounded-[1.5rem] border border-primary/10 bg-white p-3 shadow-[0_20px_60px_rgba(24,48,34,0.14)]">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="rounded-[1.2rem] border border-primary/10 bg-primary/10 px-4 py-3">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary/70">
-                        Edicao atual
+                    <div className="mt-3 rounded-[1.1rem] bg-primary/10 px-4 py-3">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/70">
+                        Usuario logado
                       </p>
-                      <p className="mt-2 text-xl font-semibold text-dark">
-                        {selectedYear ? selectedYear.ano : "--"}
+                      <p className="mt-2 break-all text-sm font-medium text-dark">
+                        {currentUserEmail ?? "Sem usuario"}
                       </p>
                     </div>
-                    <div className="rounded-[1.2rem] border border-primary/10 bg-primary/10 px-4 py-3">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary/70">
-                        Etapa atual
-                      </p>
-                      <p className="mt-2 text-xl font-semibold text-dark">{selectedStageLabel}</p>
-                    </div>
-                  </div>
 
-                  <div className="mt-3 rounded-[1.1rem] bg-primary/10 px-4 py-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/70">
-                      Usuario logado
-                    </p>
-                    <p className="mt-2 break-all text-sm font-medium text-dark">
-                      {currentUserEmail ?? "Sem usuario"}
-                    </p>
+                    <button
+                      className="mt-3 flex w-full items-center justify-between rounded-[1.1rem] px-4 py-3 text-left text-sm font-semibold text-dark transition-colors hover:bg-primary/10 hover:text-black"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        clearSelection();
+                        logout();
+                      }}
+                      type="button"
+                    >
+                      <span>Sair</span>
+                      <span className="text-primary">Encerrar sessao</span>
+                    </button>
                   </div>
-
-                  <button
-                    className="mt-3 flex w-full items-center justify-between rounded-[1.1rem] px-4 py-3 text-left text-sm font-semibold text-dark transition-colors hover:bg-primary/10 hover:text-black"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      clearSelection();
-                      logout();
-                    }}
-                    type="button"
-                  >
-                    <span>Sair</span>
-                    <span className="text-primary">Encerrar sessao</span>
-                  </button>
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </div>
 
-            <div className="hidden flex-wrap items-start justify-end gap-3 sm:flex lg:max-w-[30rem]">
+            <div className="hidden items-start justify-between gap-4 sm:flex">
+              <div className="min-w-0">
+                <h1 className="text-4xl font-semibold leading-tight text-dark sm:text-5xl">
+                  Escolha a edicao e depois a etapa.
+                </h1>
+              </div>
+
+              <div className="flex flex-wrap items-start justify-end gap-3 lg:max-w-[30rem]">
               <div className="grid grid-cols-2 gap-3 sm:w-fit">
                 <div className="rounded-[1.2rem] border border-primary/10 bg-primary/10 px-4 py-3">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary/70">
@@ -195,6 +201,7 @@ export const EditionSelectionPage = () => {
                   logout();
                 }}
               />
+              </div>
             </div>
           </div>
         </section>
