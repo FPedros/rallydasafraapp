@@ -1,0 +1,438 @@
+Crie um sistema web completo, funcional e responsivo para gestão operacional de Rally, com foco principal em mobile first, utilizando React no frontend e Node.js com Express no backend.
+
+Objetivo principal:
+Construir uma base sólida, escalável, organizada e pronta para evolução futura, considerando que todo o sistema gira em torno do contexto de ano + edição do Rally.
+
+Arquitetura obrigatória do projeto:
+- O projeto deve possuir obrigatoriamente duas pastas na raiz:
+  - /frontend
+  - /backend
+- Todo o código React deve ficar dentro de /frontend
+- Todo o código da API e servidor deve ficar dentro de /backend
+- Não misturar frontend e backend
+- Estruturar o projeto para fácil manutenção, escalabilidade e clareza
+- Reaproveitar ao máximo componentes, hooks, funções, serviços e utilitários
+- Não duplicar código
+- Antes de criar novos componentes, verificar se já existe alguma base reutilizável que possa ser adaptada
+- Separar claramente UI, regras de negócio, serviços, tipos, contextos, utilitários e integrações
+
+Stack obrigatória do frontend:
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+- React Router
+- mobile first
+- componentização forte
+
+Stack obrigatória do backend:
+- Node.js
+- Express
+- API REST
+- organização por módulos/domínios
+- estrutura preparada para futura integração com banco de dados
+
+Contexto principal do negócio:
+O Rally é organizado por ano e edição.
+Cada edição possui sua própria operação.
+Todos os dados operacionais devem estar vinculados à edição selecionada.
+
+Fluxo obrigatório do sistema:
+- Ao acessar o sistema, o usuário deve primeiro escolher o ano do Rally
+- Depois deve escolher a edição daquele ano
+- Somente após selecionar ano e edição o usuário poderá visualizar e gerenciar os dados relacionados àquela edição
+- Nenhum dado operacional pode aparecer antes da seleção de ano e edição
+- Todas as telas e consultas devem respeitar o contexto da edição selecionada
+
+Domínio do sistema:
+Cada edição do Rally deve permitir controlar:
+- frota de carros
+- equipes
+- pessoas
+- responsável da equipe
+- rotas
+- hotéis e hospedagens
+- abastecimentos
+- manutenções
+- alimentação
+- alertas
+- visão operacional consolidada
+
+Entidades principais e campos esperados:
+
+AnoRally
+- id
+- ano
+- ativo
+
+EdicaoRally
+- id
+- anoRallyId
+- nome
+- descricao
+- dataInicio
+- dataFim
+- status
+
+Carro
+- id
+- edicaoId
+- placa
+- modelo
+- marca
+- ano
+- kmAtual
+- status
+- observacoes
+- equipeId
+
+Equipe
+- id
+- edicaoId
+- nome
+- carroId
+- rotaId
+- limiteAlimentacao
+- observacoes
+
+Pessoa
+- id
+- equipeId
+- nome
+- telefone
+- email
+- cargo
+- isResponsavel
+
+Rota
+- id
+- edicaoId
+- equipeId
+- nome
+- origem
+- destino
+- observacoes
+
+Hotel
+- id
+- edicaoId
+- nome
+- endereco
+- cidade
+- estado
+- telefone
+- observacoes
+
+Abastecimento
+- id
+- carroId
+- data
+- km
+- litros
+- valor
+- posto
+- observacoes
+
+Manutencao
+- id
+- carroId
+- tipo
+- descricao
+- data
+- km
+- valor
+- observacoes
+
+Alimentacao
+- id
+- equipeId
+- pessoaId
+- data
+- valor
+- descricao
+- categoria
+
+Alerta
+- id
+- edicaoId
+- tipo
+- titulo
+- descricao
+- nivel
+- entidadeRelacionada
+- entidadeId
+- visualizado
+
+Regras de negócio obrigatórias:
+- Todo dado operacional pertence a uma edição específica
+- O usuário nunca deve visualizar dados soltos sem antes escolher ano e edição
+- Cada equipe pertence a uma edição
+- Cada carro pertence a uma edição
+- Cada rota pertence a uma edição
+- Cada hotel pode ser vinculado à edição
+- Cada equipe pode ter várias pessoas
+- No cadastro de pessoa deve existir um checkbox com o texto “É responsável pela equipe?”
+- O sistema deve permitir apenas um responsável principal por equipe
+- Quando uma pessoa estiver marcada como responsável, isso deve aparecer com destaque visual na interface
+- Cada equipe deve poder ter rota vinculada
+- Cada hotel pode ser editado dentro do contexto operacional
+- Deve existir controle de quilometragem por carro
+- Deve existir controle de combustível por carro
+- Deve existir controle de manutenção por carro
+- O carro deve exibir seu histórico completo dentro da edição selecionada
+- O controle de alimentação deve funcionar por pessoa e por total da equipe
+- Deve ser possível cadastrar um limite de alimentação por equipe
+- O limite é apenas informativo
+- O sistema deve avisar quando o consumo estiver próximo do limite
+- O sistema deve avisar quando o consumo ultrapassar o limite
+- O sistema não deve bloquear lançamentos quando ultrapassar o valor
+
+Regra de alimentação:
+- calcular total por pessoa
+- calcular total consolidado por equipe
+- exibir limite configurado
+- exibir valor consumido
+- criar status visual para consumo:
+  - normal
+  - warning
+  - exceeded
+
+Criar utilitário obrigatório reutilizável:
+- função que recebe valorAtual e limite
+- retorna:
+  - normal
+  - warning
+  - exceeded
+- usar esse utilitário em todo o sistema onde houver controle de limite
+
+Funcionalidades obrigatórias:
+- Tela inicial de boas-vindas
+- Tela de seleção de ano
+- Tela de seleção de edição
+- Dashboard da edição selecionada
+- Tela de carros
+- Tela de detalhe do carro
+- Tela de equipes
+- Tela de detalhe da equipe
+- Tela de pessoas
+- Tela de rotas
+- Tela de hotéis
+- Tela de abastecimentos
+- Tela de manutenções
+- Tela de alimentação
+- Tela de alertas
+- CRUD completo das entidades principais
+- Filtros por edição, carro, equipe, responsável e período
+- Busca rápida
+- Histórico por carro
+- Resumo financeiro por equipe
+- Total de alimentação por pessoa
+- Total de alimentação por equipe
+- Alertas de limite próximo e ultrapassado
+
+Fluxo de telas esperado:
+1. Tela de boas-vindas ou dashboard inicial
+2. Seleção do ano do Rally
+3. Seleção da edição do Rally
+4. Entrada no sistema da edição selecionada
+5. Dashboard com visão geral da operação
+6. Navegação para carros, equipes, pessoas, rotas, hotéis, abastecimentos, manutenções, alimentação e alertas
+
+Requisitos da tela de equipe:
+- Mostrar dados da equipe
+- Mostrar carro vinculado
+- Mostrar rota vinculada
+- Mostrar lista de pessoas da equipe
+- Destacar visualmente quem é o responsável
+- Mostrar total de alimentação
+- Mostrar limite configurado
+- Mostrar alertas relacionados
+
+Requisitos da tela do carro:
+- Mostrar dados do carro
+- Mostrar equipe vinculada
+- Mostrar responsável da equipe
+- Mostrar quilometragem atual
+- Mostrar histórico de abastecimentos
+- Mostrar histórico de manutenções
+- Mostrar rota vinculada
+- Mostrar gastos relacionados
+
+UI e UX obrigatórios:
+- mobile first
+- layout limpo, moderno e profissional
+- visual inspirado no agro
+- aparência sólida, funcional e elegante
+- foco em uso em campo
+- navegação simples e rápida
+- formulários padronizados
+- tabelas e listas adaptadas para mobile
+- cards reutilizáveis
+- componentes de status e alertas
+- evitar telas poluídas
+- aproveitar bem o espaço no mobile
+
+Paleta e design system obrigatórios:
+Criar um design system centralizado utilizando Tailwind CSS.
+Não usar cores hardcoded diretamente dentro dos componentes.
+
+Configurar o Tailwind com as seguintes cores:
+theme: {
+  extend: {
+    colors: {
+      background: '#F8EDD9',
+      primary: '#317039',
+      surface: '#FFFFFF',
+      accent: '#F1BE49',
+      dark: '#143022',
+      text: '#1A1A1A',
+    }
+  }
+}
+
+Regras visuais obrigatórias:
+- usar background como fundo principal
+- usar surface para cards e containers
+- usar primary para ações principais
+- usar accent para destaques e avisos
+- usar dark para títulos, detalhes e pontos de contraste
+- usar text como cor principal de texto
+- nunca usar #hex diretamente nos componentes
+- sempre usar classes semânticas do Tailwind baseadas no tema
+
+Criar tokens semânticos obrigatórios no projeto:
+- bg-background
+- bg-surface
+- bg-primary
+- bg-accent
+- text-light
+- text-accent
+- border-primary
+
+Criar ThemeProvider opcional, mas recomendado:
+- centralizar tema
+- preparar o projeto para evolução futura
+- permitir futura expansão como dark mode ou variações de tema
+
+Criar componentes reutilizáveis obrigatórios:
+1. Card
+- usar bg-surface
+- padding padrão
+- borda suave
+- sombra leve
+- estrutura reutilizável
+
+2. Button
+- variante primary
+- variante accent
+- variante ghost
+
+3. Badge
+- status normal
+- status alerta
+- status crítico
+
+4. Alert
+- variações para aviso
+- variações para crítico
+
+5. Input
+- padrão visual consistente
+- foco visível
+
+6. Select
+- padrão visual consistente
+- foco visível
+
+7. FormField
+- padrão reaproveitável para inputs, labels, mensagens e validações
+
+8. StatCard
+- componente essencial do dashboard
+- exibir número, label e indicador visual de status
+
+Layout obrigatório:
+- layout principal com sidebar no desktop
+- bottom navigation ou menu adaptado para mobile
+- header com contexto da edição selecionada mostrando ano + edição
+- conteúdo com padding responsivo
+- estrutura visual consistente entre telas
+
+Dashboard obrigatório:
+- resumo por equipe
+- resumo por carro
+- consumo de combustível
+- total de alimentação
+- indicador visual de limite
+- alertas ativos
+
+Organização obrigatória do frontend:
+frontend/src/
+  components/
+  pages/
+  layouts/
+  routes/
+  hooks/
+  services/
+  types/
+  utils/
+  contexts/
+  mocks/
+
+Organização obrigatória do backend:
+backend/src/
+  modules/
+  routes/
+  controllers/
+  services/
+  repositories/
+  middlewares/
+  utils/
+  types/
+
+Backend esperado:
+- API REST funcional
+- rotas organizadas por domínio
+- estrutura preparada para trocar mocks por banco real depois
+- controllers separados
+- services separados
+- repositories preparados para abstração futura
+- dados mockados iniciais
+
+Frontend esperado:
+- rotas configuradas com React Router
+- fluxo funcional de seleção de ano e edição
+- contexto global da edição selecionada
+- dashboard já contextualizado
+- telas principais já montadas com dados mockados
+- componentes reutilizáveis prontos para expansão
+
+Entregas obrigatórias:
+1. Estrutura inicial completa com frontend e backend
+2. Frontend React funcional
+3. Backend Node.js e Express funcional
+4. Fluxo inicial de seleção de ano e edição
+5. Dashboard contextualizado pela edição escolhida
+6. Componentes reutilizáveis
+7. Rotas do frontend
+8. Rotas da API
+9. Dados mockados iniciais
+10. Tipagem completa das entidades
+11. Layout mobile first
+12. Exemplos de telas principais já montadas
+13. Cadastro de pessoas com checkbox de responsável
+14. Identidade visual em verde oliva e tons terrosos
+15. README com instruções para rodar frontend e backend
+
+Instruções finais:
+- Gere código real, não pseudocódigo
+- Gere uma base profissional e pronta para crescimento
+- Crie arquivos iniciais funcionais
+- Priorize manutenção futura
+- Priorize reuso
+- Evite repetição
+- Faça uma arquitetura clara
+- Gere mocks suficientes para demonstrar a navegação e as telas
+- Mantenha consistência visual em todas as páginas
+- Considere que o sistema será usado operacionalmente em campo
+- Entregue o projeto com boa experiência inicial de uso e boa base para expansão futura
