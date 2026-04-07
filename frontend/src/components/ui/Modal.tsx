@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { cn } from "../../utils/cn";
 
 interface ModalProps {
@@ -23,20 +23,46 @@ export const Modal = ({
   children,
   size = "default"
 }: ModalProps) => {
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const scrollY = window.scrollY;
+    const previousOverflow = document.body.style.overflow;
+    const previousPosition = document.body.style.position;
+    const previousTop = document.body.style.top;
+    const previousWidth = document.body.style.width;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.position = previousPosition;
+      document.body.style.top = previousTop;
+      document.body.style.width = previousWidth;
+      window.scrollTo(0, scrollY);
+    };
+  }, [open]);
+
   if (!open) {
     return null;
   }
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-6"
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-4 sm:items-center sm:py-6"
       role="dialog"
       aria-modal="true"
       aria-label={title}
     >
       <div
         className={cn(
-          "flex max-h-[90vh] w-full flex-col overflow-hidden rounded-[2rem] border border-primary/10 bg-surface shadow-soft",
+          "my-auto flex w-full flex-col overflow-hidden rounded-[2rem] border border-primary/10 bg-surface shadow-soft",
+          "max-h-[calc(100dvh-2rem)] sm:max-h-[90vh]",
           sizeClasses[size]
         )}
       >
@@ -54,7 +80,7 @@ export const Modal = ({
             X
           </button>
         </div>
-        <div className="overflow-y-auto px-5 py-5">{children}</div>
+        <div className="overflow-y-auto overscroll-contain px-5 py-5">{children}</div>
       </div>
     </div>
   );
