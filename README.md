@@ -57,4 +57,25 @@ Se quiser apontar para outra URL da API, configure `VITE_API_URL`.
 
 - O backend usa dados em memoria para facilitar evolucao futura para banco real.
 - A API ja esta preparada para filtros por `editionId`, `teamId`, `carId`, `routeId`, `personId`, `from`, `to` e busca textual.
+
+## Deploy no Vercel
+
+Este repositorio tem `frontend` e `backend`, entao o caminho mais simples no Vercel e criar 2 projetos separados:
+
+### 1. Frontend
+
+- Crie um projeto novo no Vercel.
+- Selecione este repositorio.
+- Defina `Root Directory` como `frontend`.
+- O framework sera detectado como `Vite`.
+- Em producao, se quiser apontar para um backend externo, configure `VITE_API_URL`.
+
+### 2. Backend
+
+- Crie outro projeto no Vercel.
+- Selecione o mesmo repositorio.
+- Defina `Root Directory` como `backend`.
+- Se necessario, use a URL publicada desse projeto como valor de `VITE_API_URL` no frontend.
+
+Se voce tentar subir a raiz `./` como um unico projeto, o Vercel passa a tratar o repositorio como multi-servico e pode exigir configuracao adicional via `vercel.json`.
 # rallydasafraapp
