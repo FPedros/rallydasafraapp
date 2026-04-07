@@ -16,7 +16,7 @@ export const AppHeader = () => {
   const stageLabel = selectedEdition ? getEditionStageMeta(selectedEdition).label : "Etapa pendente";
 
   return (
-    <header className="rounded-4xl border border-primary/10 bg-surface p-5 shadow-soft">
+    <header className="hidden rounded-4xl border border-primary/10 bg-surface p-5 shadow-soft lg:block">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-bold text-dark">

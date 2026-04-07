@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { AppHeader } from "../components/shared/AppHeader";
-import { BottomNav } from "../components/shared/BottomNav";
+import { MobileAppHeader } from "../components/shared/MobileAppHeader";
 import { SidebarNav } from "../components/shared/SidebarNav";
 
 const navItems = [
@@ -17,7 +17,8 @@ const navItems = [
 ];
 
 export const MainLayout = () => (
-  <div className="min-h-screen w-full px-4 py-4 pb-24 sm:px-6 xl:px-8 2xl:px-10 lg:pb-6">
+  <div className="min-h-screen w-full px-4 py-24 sm:px-6 sm:py-6 xl:px-8 2xl:px-10 lg:py-4">
+    <MobileAppHeader items={navItems} />
     <div className="flex w-full items-start gap-6">
       <SidebarNav items={navItems} />
       <main className="min-w-0 flex-1 space-y-6">
@@ -25,6 +26,5 @@ export const MainLayout = () => (
         <Outlet />
       </main>
     </div>
-    <BottomNav items={navItems} />
   </div>
 );
