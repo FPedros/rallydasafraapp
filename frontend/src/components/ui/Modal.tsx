@@ -54,7 +54,7 @@ export const Modal = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/70"
+      className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label={title}
@@ -62,20 +62,20 @@ export const Modal = ({
       <div className="fixed inset-0 flex items-end justify-center p-3 sm:items-center sm:p-6">
         <div
           className={cn(
-            "flex w-full flex-col overflow-hidden rounded-[2rem] border border-primary/10 bg-surface shadow-soft",
+            "flex w-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-xl",
             "h-[calc(100dvh-1.5rem)] max-h-[calc(100dvh-1.5rem)] sm:h-auto sm:max-h-[90vh]",
             sizeClasses[size]
           )}
         >
-          <div className="shrink-0 flex items-start justify-between gap-4 border-b border-primary/10 px-5 py-4">
+          <div className="shrink-0 flex items-start justify-between gap-4 border-b border-border px-5 py-4">
             <div>
-              <h2 className="text-xl font-bold text-dark">{title}</h2>
-              {description ? <p className="mt-1 text-sm text-text/70">{description}</p> : null}
+              <h2 className="text-xl font-semibold text-foreground">{title}</h2>
+              {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/15 text-lg font-semibold text-dark transition-colors hover:bg-primary/10"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-input text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
               aria-label="Fechar modal"
             >
               X

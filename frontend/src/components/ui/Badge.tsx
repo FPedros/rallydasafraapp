@@ -4,9 +4,9 @@ import { cn } from "../../utils/cn";
 type Variant = "normal" | "warning" | "critical";
 
 const styles: Record<Variant, string> = {
-  normal: "bg-primary/12 text-primary",
-  warning: "bg-accent/22 text-ink",
-  critical: "bg-dark text-light"
+  normal: "border border-border bg-secondary text-secondary-foreground",
+  warning: "border border-border bg-accent text-accent-foreground",
+  critical: "border border-destructive/20 bg-destructive/10 text-destructive"
 };
 
 export const Badge = ({
@@ -17,7 +17,7 @@ export const Badge = ({
 }: HTMLAttributes<HTMLSpanElement> & { variant?: Variant }) => (
   <span
     className={cn(
-      "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold",
+      "inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-medium",
       styles[variant],
       className
     )}

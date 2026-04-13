@@ -61,8 +61,8 @@ export const ProfileMenu = ({ className, onLogout }: ProfileMenuProps) => {
         aria-expanded={isOpen}
         aria-haspopup="menu"
         className={cn(
-          "flex h-12 w-12 items-center justify-center rounded-full border border-primary/12 bg-light text-dark shadow-soft transition-colors",
-          "hover:bg-primary/10 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          "flex h-10 w-10 items-center justify-center rounded-full border border-input bg-background text-foreground shadow-sm transition-colors",
+          "hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         )}
         onClick={() => setIsOpen((current) => !current)}
         type="button"
@@ -72,22 +72,22 @@ export const ProfileMenu = ({ className, onLogout }: ProfileMenuProps) => {
 
       {isOpen ? (
         <div
-          className="absolute right-0 top-[calc(100%+0.75rem)] z-30 w-64 rounded-[1.5rem] border border-primary/10 bg-white p-3 shadow-[0_20px_60px_rgba(24,48,34,0.14)]"
+          className="absolute right-0 top-[calc(100%+0.75rem)] z-30 w-64 rounded-xl border border-border bg-popover p-3 text-popover-foreground shadow-xl"
           role="menu"
         >
-          <div className="rounded-[1.1rem] bg-primary/10 px-4 py-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/70">
+          <div className="rounded-lg border border-border bg-muted/40 px-4 py-3">
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
               Usuario logado
             </p>
-            <p className="mt-2 break-all text-sm font-medium text-dark">
+            <p className="mt-2 break-all text-sm font-medium text-foreground">
               {currentUserEmail ?? "Sem usuario"}
             </p>
           </div>
 
           <button
             className={cn(
-              "mt-3 flex w-full items-center justify-between rounded-[1.1rem] px-4 py-3 text-left text-sm font-semibold text-dark transition-colors",
-              "hover:bg-primary/10 hover:text-black"
+              "mt-3 flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground transition-colors",
+              "hover:bg-accent hover:text-accent-foreground"
             )}
             onClick={() => {
               setIsOpen(false);
@@ -97,7 +97,7 @@ export const ProfileMenu = ({ className, onLogout }: ProfileMenuProps) => {
             type="button"
           >
             <span>Sair</span>
-            <span className="text-primary">Encerrar sessao</span>
+            <span className="text-muted-foreground">Encerrar sessao</span>
           </button>
         </div>
       ) : null}

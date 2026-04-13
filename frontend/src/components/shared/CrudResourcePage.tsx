@@ -13,6 +13,7 @@ import { ResourcePageConfig } from "../../pages/resourceDefinitions";
 import { cn } from "../../utils/cn";
 import { useSelection } from "../../hooks/useSelection";
 import { Modal } from "../ui/Modal";
+import { Checkbox } from "../ui/checkbox";
 
 type FormValue = string | number | boolean | string[];
 type FormState = Record<string, FormValue>;
@@ -318,13 +319,13 @@ export const CrudResourcePage = ({ config }: { config: ResourcePageConfig }) => 
     }
   };
 
-  const toggleMultiSelectValue = (fieldName: string, optionValue: string) => {
+  const setMultiSelectValue = (fieldName: string, optionValue: string, checked: boolean) => {
     setFormValues((previous) => {
       const currentValue = previous[fieldName];
       const selectedValues = Array.isArray(currentValue) ? currentValue : [];
-      const nextValues = selectedValues.includes(optionValue)
-        ? selectedValues.filter((value) => value !== optionValue)
-        : [...selectedValues, optionValue];
+      const nextValues = checked
+        ? Array.from(new Set([...selectedValues, optionValue]))
+        : selectedValues.filter((value) => value !== optionValue);
 
       return {
         ...previous,
@@ -573,15 +574,14 @@ export const CrudResourcePage = ({ config }: { config: ResourcePageConfig }) => 
                 return (
                   <label
                     key={field.name}
-                    className="flex min-h-11 items-center gap-3 rounded-2xl border border-primary/15 bg-primary/10 px-4 py-3 text-sm text-dark md:col-span-2"
+                    className="flex min-h-11 cursor-pointer items-center gap-3 rounded-2xl border border-primary/15 bg-primary/10 px-4 py-3 text-sm text-dark md:col-span-2"
                   >
-                    <input
-                      type="checkbox"
+                    <Checkbox
                       checked={Boolean(formValues[field.name])}
-                      onChange={(event) =>
+                      onCheckedChange={(checked) =>
                         setFormValues((previous) => ({
                           ...previous,
-                          [field.name]: event.target.checked
+                          [field.name]: checked
                         }))
                       }
                     />
@@ -621,12 +621,14 @@ export const CrudResourcePage = ({ config }: { config: ResourcePageConfig }) => 
                           return (
                             <label
                               key={option.value}
-                              className="flex items-start gap-3 text-sm text-text"
+                              className="flex cursor-pointer items-start gap-3 text-sm text-text"
                             >
-                              <input
-                                type="checkbox"
+                              <Checkbox
+                                className="mt-0.5"
                                 checked={selectedValues.includes(option.value)}
-                                onChange={() => toggleMultiSelectValue(field.name, option.value)}
+                                onCheckedChange={(checked) =>
+                                  setMultiSelectValue(field.name, option.value, checked)
+                                }
                               />
                               <span>{option.label}</span>
                             </label>
